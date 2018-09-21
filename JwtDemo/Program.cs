@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace JwtDemo
 {
+    // na podst. https://github.com/cornflourblue/aspnet-core-jwt-authentication-api
     public class Program
     {
         public static void Main(string[] args)
