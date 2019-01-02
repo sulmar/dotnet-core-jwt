@@ -36,18 +36,22 @@ namespace JwtDemo.Services
                 return null;
 
             // authentication successful so generate jwt token
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.SecretKey);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.SecretKey));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
+
+            var claimsIdentity = new ClaimsIdentity(new Claim[]
             {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, user.Id.ToString())
-                }),
+                new Claim(ClaimTypes.Name, user.Id.ToString())
+            });
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var securityTokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = claimsIdentity,
                 Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = credentials
             };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var token = tokenHandler.CreateToken(securityTokenDescriptor);
             user.Token = tokenHandler.WriteToken(token);
 
             // remove password before returning
