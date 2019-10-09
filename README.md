@@ -1,1 +1,5 @@
 # Przykład autentykacji w .NET Core 2.2 z użyciem tokenów JWT
+
+- Przykład wygenerowanego tokena
+
+https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uc21pdGhAZG9tYWluLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL21vYmlsZXBob25lIjoiNTU1MzMzMjIyIiwibmJmIjoxNTcwNjEzNTkxLCJleHAiOjE1NzEyMTgzOTEsImlhdCI6MTU3MDYxMzU5MX0.tcHkvrLyP8gTC-27QFuw_oUsxmaxEVB7xq29apJSS9M
