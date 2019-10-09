@@ -3,7 +3,7 @@
 
 ## Generowanie tokena
 
-~~~ 
+c
 POST http://localhost:5000/api/users
 Content-Type: application/json
 {"Username":"john","HashPassword":"12345"}
@@ -15,8 +15,8 @@ https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpb
 
 
 ## Przykład użycia
-
+~~~
  GET http://localhost:5000/api/values
  Authorization: Bearer {token}
- 
+~~~
  
