@@ -14,59 +14,27 @@ namespace JwtDemo.Services
 {
     public class UserService : IUsersService
     {
-        // users hardcoded for simplicity, store in a db with hashed passwords in production applications
         private List<User> _users = new List<User>
         {
-            new User { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "test" }
+            new User { Id = 1, FirstName = "John", LastName = "Smith", Username = "john", HashPassword = "12345", Phone = "555333222", Email = "john.smith@domain.com" }
         };
 
-        private readonly AppSettings _appSettings;
-
-        public UserService(IOptions<AppSettings> appSettings)
-        {
-            _appSettings = appSettings.Value;
-        }
-
-        public User Authenticate(string username, string password)
-        {
-            var user = _users.SingleOrDefault(x => x.Username == username && x.Password == password);
-
-            // return null if user not found
-            if (user == null)
-                return null;
-
-            // authentication successful so generate jwt token
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.SecretKey));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
-
-            var claimsIdentity = new ClaimsIdentity(new Claim[]
-            {
-                new Claim(ClaimTypes.Name, user.Id.ToString())
-            });
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var securityTokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = claimsIdentity,
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = credentials
-            };
-            var token = tokenHandler.CreateToken(securityTokenDescriptor);
-            user.Token = tokenHandler.WriteToken(token);
-
-            // remove password before returning
-            user.Password = null;
-
-            return user;
-        }
-
-        public IEnumerable<User> GetAll()
+        public IEnumerable<User> Get()
         {
             // return users without passwords
             return _users.Select(x => {
-                x.Password = null;
+                x.HashPassword = null;
                 return x;
             });
+        }
+
+        public bool TryAthorize(string username, string password, out User user)
+        {
+            user = _users.SingleOrDefault(c => c.Username == username && c.HashPassword == password);
+
+            user.HashPassword = null;
+
+            return user != null;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,10 @@ namespace JwtDemo.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
+
+            string phone = this.User.FindFirst(ClaimTypes.MobilePhone)?.Value;
+            string email = this.User.FindFirst(ClaimTypes.Email)?.Value;
+
             return new string[] { "value1", "value2" };
         }
 

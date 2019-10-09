@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace JwtDemo.IServices
 {
+
     public interface IUsersService
     {
-        User Authenticate(string username, string password);
-        IEnumerable<User> GetAll();
+        bool TryAthorize(string username, string password, out User user);
+        IEnumerable<User> Get();
     }
 }

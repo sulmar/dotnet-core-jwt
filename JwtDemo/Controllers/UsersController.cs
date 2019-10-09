@@ -23,14 +23,22 @@ namespace JwtDemo.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult GenerateToken([FromBody] User userParam)
+        public IActionResult GenerateToken([FromServices] ITokenService tokenService, [FromBody] User userParam)
         {
-            var user = _usersService.Authenticate(userParam.Username, userParam.Password);
+           if (_usersService.TryAthorize(userParam.Username, userParam.HashPassword, out User user))
+           {
+                user.Token = tokenService.CreateToken(user);
 
-            if (user == null)
+                return Ok(user);
+           }
+
+            else
+            {
                 return BadRequest(new { message = "Username or password is incorrect" });
+            }
+               
 
-            return Ok(user);
+           
         }
     }
 }
