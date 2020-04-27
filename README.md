@@ -2,7 +2,7 @@
 
 ## Generowanie tokena
 
-c
+~~~ 
 POST http://localhost:5000/api/users
 Content-Type: application/json
 {"Username":"john","HashPassword":"12345"}
