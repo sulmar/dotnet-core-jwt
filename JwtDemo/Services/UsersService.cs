@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace JwtDemo.Services
 {
-    public class UserService : IUsersService
+    public class UserService : IUsersService, IAthorizationService
     {
         private List<User> _users = new List<User>
         {

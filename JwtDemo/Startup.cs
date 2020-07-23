@@ -51,6 +51,7 @@ namespace JwtDemo
 
             services.AddScoped<IUsersService, UserService>();
             services.AddScoped<ITokenService, JwtTokenService>();
+            services.AddScoped<IAthorizationService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

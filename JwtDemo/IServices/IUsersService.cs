@@ -9,7 +9,6 @@ namespace JwtDemo.IServices
 
     public interface IUsersService
     {
-        bool TryAthorize(string username, string password, out User user);
         IEnumerable<User> Get();
     }
 }

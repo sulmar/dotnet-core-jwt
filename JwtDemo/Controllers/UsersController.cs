@@ -14,18 +14,18 @@ namespace JwtDemo.Controllers
     [Route("api/[controller]")]
     public class UsersController : Controller
     {
-        private readonly IUsersService _usersService;
-        
-        public UsersController(IUsersService usersService)
+        private readonly IAthorizationService athorizationService;
+
+        public UsersController(IAthorizationService athorizationService)
         {
-            _usersService = usersService;
+            this.athorizationService = athorizationService;
         }
 
         [AllowAnonymous]
         [HttpPost]
         public IActionResult GenerateToken([FromServices] ITokenService tokenService, [FromBody] User userParam)
         {
-           if (_usersService.TryAthorize(userParam.Username, userParam.HashPassword, out User user))
+           if (athorizationService.TryAthorize(userParam.Username, userParam.HashPassword, out User user))
            {
                 user.Token = tokenService.CreateToken(user);
 
